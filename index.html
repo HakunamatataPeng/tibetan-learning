@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#16213e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="藏语学习">
+    <link rel="manifest" href="manifest.json">
+    <title>藏语学习助手</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tibetan:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h1>📿 藏语学习助手</h1>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="home">
+                    <span class="icon">🏠</span>
+                    <span>首页</span>
+                </li>
+                <li class="nav-item" data-page="vocabulary">
+                    <span class="icon">📝</span>
+                    <span>单词管理</span>
+                </li>
+                <li class="nav-item" data-page="flashcard">
+                    <span class="icon">🎴</span>
+                    <span>背单词</span>
+                </li>
+                <li class="nav-item" data-page="speaking">
+                    <span class="icon">🎤</span>
+                    <span>口语练习</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <p>藏语学习 · 日积月累</p>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 首页 -->
+            <section id="page-home" class="page active">
+                <div class="hero">
+                    <h2>欢迎使用藏语学习助手</h2>
+                    <p class="subtitle">以你的录音素材为核心，打造个性化学习体验</p>
+                </div>
+                <div class="dashboard">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-total-words">0</span>
+                            <span class="stat-label">已录入单词</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-mastered">0</span>
+                            <span class="stat-label">已掌握</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎵</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-audio-files">0</span>
+                            <span class="stat-label">录音素材</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-streak">0</span>
+                            <span class="stat-label">学习天数</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <h3>快速开始</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="navigateTo('vocabulary')">
+                            <span class="icon">➕</span> 录入新单词
+                        </button>
+                        <button class="btn btn-secondary" onclick="navigateTo('flashcard')">
+                            <span class="icon">🎴</span> 开始背单词
+                        </button>
+                        <button class="btn btn-secondary" onclick="navigateTo('speaking')">
+                            <span class="icon">🎤</span> 口语练习
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 单词管理页 -->
+            <section id="page-vocabulary" class="page">
+                <h2>📝 单词管理</h2>
+                <p class="page-desc">手动录入藏语单词、翻译、发音和例句。所有数据保存在本地。</p>
+                
+                <div class="vocab-layout">
+                    <div class="vocab-form-container">
+                        <div class="card">
+                            <h3>添加新单词</h3>
+                            <form id="word-form">
+                                <div class="form-group">
+                                    <label for="word-tibetan">藏语单词 <span class="required">*</span></label>
+                                    <input type="text" id="word-tibetan" class="tibetan-font" placeholder="输入藏语单词..." required>
+                                    <small class="hint">支持藏文输入</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-wylie">威利转写（可选）</label>
+                                    <input type="text" id="word-wylie" placeholder="如：bod-skad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-pronunciation">发音提示（可选）</label>
+                                    <input type="text" id="word-pronunciation" placeholder="如：bo kay">
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-meaning">中文翻译 <span class="required">*</span></label>
+                                    <input type="text" id="word-meaning" placeholder="输入中文翻译..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-category">分类</label>
+                                    <input type="text" id="word-category" list="category-list" placeholder="输入或选择分类...">
+                                    <datalist id="category-list">
+                                        <option value="日常用语">
+                                        <option value="数字">
+                                        <option value="颜色">
+                                        <option value="家人">
+                                        <option value="食物">
+                                        <option value="动词">
+                                        <option value="形容词">
+                                        <option value="其他">
+                                    </datalist>
+                                    <small class="hint">可自由输入新分类，常用分类会记住</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-example">例句（可选）</label>
+                                    <textarea id="word-example" rows="2" class="tibetan-font" placeholder="输入藏语例句..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-example-meaning">例句翻译（可选）</label>
+                                    <textarea id="word-example-meaning" rows="2" placeholder="输入例句翻译..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="word-notes">备注（可选）</label>
+                                    <textarea id="word-notes" rows="2" placeholder="添加备注..."></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">添加单词</button>
+                                    <button type="button" class="btn btn-ghost" id="btn-clear-form">清空</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-list-container">
+                        <div class="card">
+                            <div class="list-header">
+                                <h3>单词列表</h3>
+                                <div class="list-filters">
+                                    <input type="text" id="filter-category" list="category-list" placeholder="输入分类筛选...">
+                                    <input type="text" id="search-words" placeholder="搜索单词或翻译...">
+                                </div>
+                            </div>
+                            <div class="word-list" id="word-list">
+                                <div class="empty-state">
+                                    <span class="empty-icon">📝</span>
+                                    <p>还没有录入单词</p>
+                                    <p class="empty-sub">在左侧表单添加你的第一个藏语单词吧</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 背单词页 -->
+            <section id="page-flashcard" class="page">
+                <h2>🎴 背单词</h2>
+                <p class="page-desc">通过闪卡模式记忆单词，点击卡片翻转查看答案。</p>
+                
+                <div class="flashcard-container">
+                    <div class="flashcard-controls">
+                        <div class="control-group">
+                            <label>学习模式：</label>
+                            <select id="flashcard-mode">
+                                <option value="tibetan-to-chinese">藏语 → 中文</option>
+                                <option value="chinese-to-tibetan">中文 → 藏语</option>
+                                <option value="random">随机模式</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>筛选分类：</label>
+                            <input type="text" id="flashcard-filter" list="category-list" placeholder="全部">
+                        </div>
+                        <button class="btn btn-primary" id="btn-start-session">开始学习</button>
+                    </div>
+                    
+                    <div class="flashcard-area" id="flashcard-area">
+                        <div class="empty-state">
+                            <span class="empty-icon">🎴</span>
+                            <p>准备好开始背单词了吗？</p>
+                            <p class="empty-sub">选择模式和分类，点击"开始学习"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard-progress" id="flashcard-progress" style="display:none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span class="progress-text" id="progress-text">0 / 0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 口语练习页 -->
+            <section id="page-speaking" class="page">
+                <h2>🎤 口语练习</h2>
+                <p class="page-desc">上传老师的录音素材，进行听读、跟读练习。</p>
+                
+                <div class="speaking-layout">
+                    <div class="speaking-upload">
+                        <div class="card">
+                            <h3>📂 录音素材库</h3>
+                            <div class="upload-area" id="upload-area">
+                                <span class="upload-icon">📤</span>
+                                <p>拖拽录音文件到此处，或点击上传</p>
+                                <p class="upload-hint">支持 MP3, WAV, OGG, M4A 格式</p>
+                                <input type="file" id="audio-file-input" accept="audio/*" multiple>
+                            </div>
+                            <div class="audio-list" id="audio-list">
+                                <div class="empty-state small">
+                                    <span class="empty-icon">🎵</span>
+                                    <p>暂无录音素材</p>
+                                    <p class="empty-sub">上传老师的录音开始练习</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="speaking-practice">
+                        <div class="card" id="practice-card">
+                            <h3>🎧 练习区</h3>
+                            <div class="practice-player" id="practice-player">
+                                <div class="player-empty">
+                                    <span class="empty-icon">🎧</span>
+                                    <p>请从左侧选择一个录音开始练习</p>
+                                </div>
+                            </div>
+                            <div class="practice-exercises" id="practice-exercises" style="display:none;">
+                                <div class="exercise-tabs">
+                                    <button class="tab-btn active" data-tab="listen">👂 听读模式</button>
+                                    <button class="tab-btn" data-tab="shadow">🗣️ 影子跟读</button>
+                                    <button class="tab-btn" data-tab="record">🎙️ 录音对比</button>
+                                </div>
+                                
+                                <div class="tab-content active" id="tab-listen">
+                                    <div class="listen-instructions">
+                                        <p>👂 <strong>听读模式：</strong>播放老师的录音，认真聆听发音、语调和节奏。</p>
+                                        <p>可以反复播放，建议在听的同时尝试小声跟读。</p>
+                                    </div>
+                                    <div class="playback-controls">
+                                        <button class="btn btn-icon" id="btn-loop">🔁 循环播放</button>
+                                        <button class="btn btn-icon" id="btn-slow">🐢 慢速播放</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content" id="tab-shadow">
+                                    <div class="shadow-instructions">
+                                        <p>🗣️ <strong>影子跟读：</strong>几乎同步地跟着录音朗读，像影子一样紧随其后。</p>
+                                        <p>这是提高口语流利度和语音语调的最佳方法。</p>
+                                    </div>
+                                    <div class="playback-controls">
+                                        <button class="btn btn-icon" id="btn-pause-delay">⏸️ 设置暂停间隔</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content" id="tab-record">
+                                    <div class="record-instructions">
+                                        <p>🎙️ <strong>录音对比：</strong>先播放老师的录音，然后录制你的跟读，进行对比。</p>
+                                    </div>
+                                    <div class="record-controls">
+                                        <button class="btn btn-record" id="btn-start-record">
+                                            <span class="record-icon">🔴</span> 开始录音
+                                        </button>
+                                        <button class="btn btn-stop" id="btn-stop-record" disabled>
+                                            <span class="record-icon">⏹️</span> 停止录音
+                                        </button>
+                                    </div>
+                                    <div class="user-recording" id="user-recording" style="display:none;">
+                                        <p>你的录音：</p>
+                                        <audio id="user-audio" controls></audio>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 编辑单词模态框 -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>编辑单词</h3>
+                <button class="btn-close" id="btn-close-modal">&times;</button>
+            </div>
+            <form id="edit-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label for="edit-tibetan">藏语单词</label>
+                    <input type="text" id="edit-tibetan" class="tibetan-font" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-wylie">威利转写</label>
+                    <input type="text" id="edit-wylie">
+                </div>
+                <div class="form-group">
+                    <label for="edit-pronunciation">发音提示</label>
+                    <input type="text" id="edit-pronunciation">
+                </div>
+                <div class="form-group">
+                    <label for="edit-meaning">中文翻译</label>
+                    <input type="text" id="edit-meaning" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">分类</label>
+                    <input type="text" id="edit-category" list="category-list" placeholder="输入或选择分类...">
+                </div>
+                <div class="form-group">
+                    <label for="edit-example">例句</label>
+                    <textarea id="edit-example" rows="2" class="tibetan-font"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-example-meaning">例句翻译</label>
+                    <textarea id="edit-example-meaning" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-notes">备注</label>
+                    <textarea id="edit-notes" rows="2"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">保存修改</button>
+                    <button type="button" class="btn btn-ghost" id="btn-cancel-edit">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/vocabulary.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/practice.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // 注册 Service Worker，支持离线使用
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(console.error);
+        }
+    </script>
+</body>
+</html>

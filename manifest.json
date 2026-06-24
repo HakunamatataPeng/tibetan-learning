@@ -1,0 +1,22 @@
+{
+  "name": "藏语学习助手",
+  "short_name": "藏语学习",
+  "description": "藏语单词管理与口语练习工具",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#16213e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%238B4513' width='192' height='192' rx='24'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='90' fill='white'%3E📿%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%238B4513' width='512' height='512' rx='48'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' font-size='240' fill='white'%3E📿%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
